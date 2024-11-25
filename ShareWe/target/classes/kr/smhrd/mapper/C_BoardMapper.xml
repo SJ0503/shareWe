@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.C_BoardMapper">
+
+	<select id="getCBoard" resultType="kr.smhrd.entity.c_board">
+		select * from c_board order by c_w_date desc
+	</select>
+	
+	<insert id="cBoardInsert" parameterType="kr.smhrd.entity.c_board">
+		insert into c_board(c_title, c_writer, email, c_img1, c_img2, c_img3, c_content, c_f_date, category, place, price, c_opt1, c_ea)
+		values(#{c_title}, #{c_writer}, #{email}, #{c_img1}, #{c_img2}, #{c_img3},#{c_content},
+		#{c_f_date}, #{category},"픽업 장소", #{price}, #{c_opt1}, #{c_ea})
+	</insert>
+	
+	<select id="getCEmail" parameterType="String" resultType="kr.smhrd.entity.c_board">
+		select * from c_board where email=#{email}
+	</select>
+	
+	<select id="getComCategory" parameterType="String" resultType="kr.smhrd.entity.c_board">
+		select * from c_board where category=#{category}
+	</select>
+	
+	<select id="C_BoardContent" parameterType="int" resultType="kr.smhrd.entity.c_board">
+		select*from c_board where c_num=#{c_num}
+	</select>
+	
+	<update id="cParticipate" parameterType="int">
+		update c_board set c_p_count=c_p_count+1 where c_num=#{c_num}
+	</update>
+	
+	<delete id="deleteRep" parameterType="map">
+		delete from c_board where email=#{param1} and c_num=#{param2}
+	</delete>
+	
+	<delete id="deleteCBoard" parameterType="int">
+		delete from c_board where c_num=#{c_num}	
+	</delete>
+	
+	<update id="cBoardUpdate" parameterType="kr.smhrd.entity.c_board">
+		update c_board set c_title=#{c_title}, c_img1=#{c_img1}, c_img2=#{c_img2}, c_img3=#{c_img3}, c_content=#{c_content}, 
+			category=#{category}, price=#{price}, c_opt1= #{c_opt1}, c_ea=#{c_ea} where c_num=#{c_num}
+	</update>
+	
+	<update id="cBoardUpdate2" parameterType="kr.smhrd.entity.c_board">
+		update c_board set c_title=#{c_title}, c_content=#{c_content}, 
+			category=#{category}, price=#{price}, c_opt1= #{c_opt1}, c_ea=#{c_ea} where c_num=#{c_num}
+	</update>
+	
+	<select id="getReview" parameterType="int" resultType="kr.smhrd.entity.review">
+		select * from review where c_num=#{c_num}
+	</select>
+	
+	<select id="getMyReview" parameterType="String" resultType="kr.smhrd.entity.review">
+		select * from review where email=#{email}
+	</select>
+	
+	<insert id="insertReview" parameterType="kr.smhrd.entity.review">
+		insert into review(email, r_score, r_content, c_num) values(#{email}, #{r_score}, #{r_content}, #{c_num})
+	</insert>
+	
+</mapper>

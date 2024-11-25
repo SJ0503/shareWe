@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.G_BoardMapper">
+
+	<select id="getGBoard" resultType="kr.smhrd.entity.g_board">
+		select * from g_board order by g_w_date desc
+	</select>
+
+	<insert id="insertBoard" parameterType="kr.smhrd.entity.g_board">
+		INSERT INTO g_board (g_title,g_writer,email,g_img1,g_img2,g_img3,g_content,g_w_date,g_b_date,category)
+		VALUES(#{g_title},#{g_writer},#{email},#{g_img1},#{g_img2},#{g_img3},#{g_content},NOW(),NOW(),#{category})
+	</insert>
+
+	
+	<select id="getgCategory" parameterType="String" resultType="kr.smhrd.entity.g_board">
+		select * from g_board where category=#{category}
+	</select>
+	
+	<select id="getGEmail" parameterType="String" resultType="kr.smhrd.entity.g_board">
+		select * from g_board where email=#{email}
+	</select>
+	
+	<select id="G_BoardContent" parameterType="int" resultType="kr.smhrd.entity.g_board">
+		select * from g_board where g_num=#{g_num}
+	</select>
+	
+	<update id="gParticipate" parameterType="int">
+		update g_board set g_p_count=g_p_count+1 where g_num=#{g_num}
+	</update>
+	
+	<delete id="deleteRep" parameterType="map">
+		delete from g_board where email=#{param1} and g_num=#{param2}
+	</delete>
+	
+	<update id="gBoardUp" parameterType="int">
+		update g_board set g_w_date=NOW() where g_num=#{g_num}
+	</update>
+	
+	<update id="gBoardUpdate" parameterType="kr.smhrd.entity.g_board">
+		update g_board set g_title=#{g_title}, g_writer=#{g_writer}, email=#{email}, g_img1 = #{g_img1}, g_img2 = #{g_img2}, g_img3 = #{g_img3}, 
+			g_content=#{g_content}, category=#{category} where g_num=#{g_num}
+	</update>
+
+	<delete id="deleteGBoard" parameterType="int">
+		delete from g_board where g_num=#{g_num}	
+	</delete>
+	
+	<update id="endGBoard" parameterType="int">
+		update g_board set g_end=1 where g_num=#{g_num}
+	</update>
+	
+	<update id="restartGBoard" parameterType="int">
+			update g_board set g_end=0 where g_num=#{g_num}
+	</update>
+</mapper>

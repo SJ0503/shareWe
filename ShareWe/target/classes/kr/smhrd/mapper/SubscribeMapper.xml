@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.SubscribeMapper">
+	
+	<insert id="insertSubscribe" parameterType="String">
+		insert into subscribe(email) value (#{email})
+	</insert>
+	
+	<select id="getSubscribe" parameterType="String" resultType="kr.smhrd.entity.subscribe">
+		select * from subscribe where email=#{email}
+	</select>
+	
+	<update id="useFreeCnt" parameterType="String">
+		update subscribe set free_cnt=free_cnt-1 where email=#{email}
+	</update>
+	
+	<update id="usePaidCnt" parameterType="String">
+		update subscribe set paid_cnt=paid_cnt-1 where email=#{email}
+	</update>
+	
+	<update id="plusPaidCnt" parameterType="kr.smhrd.entity.payment">
+		update subscribe set paid_cnt=paid_cnt+#{p_cnt} where email=#{email}
+	</update>
+	
+	<update id="plusCnt">
+		update subscribe set free_cnt=free_cnt+4 where email="qwe@naver.com"
+	</update>
+	
+	<insert id="paySuccess" parameterType="kr.smhrd.entity.payment">
+		insert into payment(email, p_name, p_amount, apply_num, pc_cnt) value (#{c_num}, #{email}, #{pc_name}, #{pc_price}, #{apply_num}, #{pc_cnt})
+	</insert>
+	
+	<insert id="purchaseSuccess" parameterType="kr.smhrd.entity.purchase">
+		insert into purchase(c_num, email, pc_name, pc_price, apply_num, pc_cnt, pc_email) value (#{c_num}, #{email}, #{pc_name}, #{pc_price}, #{apply_num}, #{pc_cnt}, #{pc_email})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.FavoriteMapper">
+
+
+<!-- GGGG -->
+	<insert id="addFavorite" parameterType="kr.smhrd.entity.g_favorite">
+		insert into g_favorite(email, g_num, g_f_date) values(#{email}, #{g_num}, NOW())
+	</insert>
+
+	<select id="getGEmail" parameterType="String" resultType="kr.smhrd.entity.g_favorite">
+		select * from g_favorite where email=#{email}
+	</select>
+	
+	<select id="getFv_list" resultType="kr.smhrd.entity.g_favorite">
+		select *from g_favorite order by g_f_date desc
+	</select>
+	
+	<select id="getCEmail" parameterType="String" resultType="kr.smhrd.entity.c_favorite">
+		select * from c_favorite where email=#{email}
+	</select>
+	
+	<select id="getCFv_list" resultType="kr.smhrd.entity.c_favorite">
+		select *from c_favorite order by c_f_date desc
+	</select>
+	
+	<select id="getFavList" parameterType="String" resultType="kr.smhrd.entity.c_favorite">
+		select * from c_favorite where email=#{email}
+	</select>
+	
+	<insert id="insertSub" parameterType="kr.smhrd.entity.c_subscribe">
+		insert into c_subscribe(email, c_name) values(#{email}, #{c_name})
+	</insert>
+	
+	<delete id="delSub" parameterType="kr.smhrd.entity.c_subscribe">
+		delete from c_subscribe where email = #{email} and c_name = #{c_name} 
+	</delete>
+	
+	<select id="getSubList" parameterType="String" resultType="kr.smhrd.entity.c_subscribe">
+		select * from c_subscribe where email=#{email}
+	</select>
+	
+	<insert id="insertFavorite" parameterType="kr.smhrd.entity.c_favorite">
+		insert into c_favorite(email, c_num) values(#{email}, #{c_num})
+	</insert>
+	
+	<delete id="delFavorite" parameterType="kr.smhrd.entity.c_favorite">
+		delete from c_favorite where c_num=#{c_num} and email=#{email}
+	</delete>
+	
+	<insert id="insertgFavorite" parameterType="kr.smhrd.entity.g_favorite">
+		insert into g_favorite(email, g_num) values(#{email}, #{g_num})
+	</insert>
+	
+	<delete id="delgFavorite" parameterType="kr.smhrd.entity.g_favorite">
+		delete from g_favorite where g_num=#{g_num} and email=#{email}
+	</delete>
+	
+	<select id="getgFavList" parameterType="String" resultType="kr.smhrd.entity.g_favorite">
+		select * from g_favorite where email=#{email}
+	</select>
+	
+</mapper>

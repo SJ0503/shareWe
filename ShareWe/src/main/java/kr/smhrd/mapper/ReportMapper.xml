@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.ReportMapper">
+
+
+	<insert id="reportInsert" parameterType="kr.smhrd.entity.report">
+		insert into report (email, rp_email, rp_content, b_num, r_title) values (#{email}, #{rp_email}, #{rp_content}, #{b_num}, #{r_title})
+	</insert>
+	
+	<delete id="passRep" parameterType="map">
+		delete from report where email=#{param1} and b_num=#{param2}
+	</delete>
+		
+	
+	</mapper>

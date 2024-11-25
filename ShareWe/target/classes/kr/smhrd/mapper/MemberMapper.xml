@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.smhrd.mapper.MemberMapper">
+
+	<insert id="memberInsert" parameterType="kr.smhrd.entity.member">
+		insert into member(type, email, pw, name, nick, address, tel) values (#{type}, #{email}, #{pw}, #{name}, #{nick}, #{address}, #{tel})
+	</insert>
+	
+	<insert id="approveMemInsert" parameterType="kr.smhrd.entity.approve">
+		insert into member(type, email, pw, name, nick, address, tel) values (#{type}, #{email}, #{pw}, #{name}, #{nick}, #{address}, #{tel})
+	</insert>
+
+	<select id="memberCheck" parameterType="kr.smhrd.entity.member" resultType="kr.smhrd.entity.member">
+		select * from member where email=#{email} and pw=#{pw}
+	</select>
+	
+	<insert id="approveInsert" parameterType="kr.smhrd.entity.member">
+		insert into approve values (#{type}, #{email}, #{pw}, #{name}, #{nick}, #{address}, #{tel})
+	</insert>
+	
+	<select id="memberCheck2" parameterType="kr.smhrd.entity.member" resultType="kr.smhrd.entity.member">
+		select * from member where email=#{email} and pw is null
+	</select>
+	
+	<select id="goAdApprove" resultType="kr.smhrd.entity.approve">
+		select * from approve
+	</select>
+	
+	<select id="getApprove" parameterType="String" resultType="kr.smhrd.entity.approve">
+		select * from approve where email=#{email}
+	</select>
+	
+	<delete id="delApprove" parameterType="String">
+		delete from approve where email=#{email}
+	</delete>
+	
+	<update id="memberUpdate" parameterType="kr.smhrd.entity.member">
+		update member set pw=#{pw}, name=#{name}, nick=#{nick}, address=#{address}, tel=#{tel} where email=#{email}
+	</update>
+	
+	<update id="updateNick" parameterType="kr.smhrd.entity.member">
+		update member set nick=#{nick} where email=#{email}
+	</update>
+	
+	<select id="C_BoardMap" parameterType="String" resultType="kr.smhrd.entity.member">
+		select * from member where nick=#{c_writer}
+	</select>
+	
+	<select id="goAdReport" resultType="kr.smhrd.entity.report">
+		select * from report
+	</select>
+		
+	<select id="goAdMember" resultType="kr.smhrd.entity.member">
+		select * from member where type in (1,2,3,4,5,6) order by type ASC
+	</select>
+	
+	<update id="goupdateCnt" parameterType="String">
+		update member set rp_cnt = rp_cnt + 1 where email=#{email}
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from member where email=#{email}
+	</delete>
+	
+	<update id="susMember" parameterType="String">
+		update member set type=type+3 where email=#{email}
+	</update>
+	
+	<update id="resMember" parameterType="String">
+		update member set type=type-3 where email=#{email}
+	</update>
+	
+	<select id="goReallyDelete" parameterType="kr.smhrd.entity.member" resultType="kr.smhrd.entity.member">
+		select * from member where email=#{email} and pw=#{pw}
+	</select>
+	
+	<delete id="goDeleteSuccess" parameterType="String">
+		delete from member where email=#{email}
+	</delete>
+	
+	<select id="goDeleteKakao" parameterType="kr.smhrd.entity.member" resultType="kr.smhrd.entity.member">
+		select * from member where email=#{email} and pw is null
+	</select>
+	
+	<select id="addrEQemail" parameterType="String" resultType="kr.smhrd.entity.member">
+		select email from member where instr(address,#{address})=1
+	</select>
+	
+	<select id="getPurchase" parameterType="String" resultType="kr.smhrd.entity.purchase">
+		select * from purchase where email=#{email} order by pc_time DESC
+	</select>
+	
+	<select id="getSub" parameterType="String" resultType="kr.smhrd.entity.subscribe">
+		select * from subscribe where email=#{email}
+	</select>
+	
+	<update id="updatePC_State" parameterType="kr.smhrd.entity.purchase">
+		update purchase set pc_state = #{pc_state} where email=#{email}
+	</update>
+	
+	<select id="getSel" parameterType="String" resultType="kr.smhrd.entity.purchase">
+		select * from purchase where pc_email=#{email} order by pc_time DESC
+	</select>
+	
+</mapper>
